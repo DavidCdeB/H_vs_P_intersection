@@ -7,7 +7,7 @@ from matplotlib.font_manager import FontProperties
 import sys
 from sympy import *
 import sympy as sym
-
+import os
 
 # We set them to be global:
 global E0_C_I,\
@@ -37,21 +37,22 @@ def P(V, E0, V0, B0, B0_prime):
     pressure= f0*f1*(1+(3.0/4.0)*(B0_prime-4)*f2)
     return pressure
 
-# Calcite I (Red triangles):
-V_not_p_f_unit_C_I, E_not_p_f_unit_C_I = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/calcite_I.dat', skiprows = 1).T
+filefolder_for_E_and_P_vs_V = '/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP-D3__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8'
+
+# Calcite I (Red triangles):  np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, 'calcite_I.dat')
+V_not_p_f_unit_C_I, E_not_p_f_unit_C_I = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, 'calcite_I.dat'), skiprows = 1).T
 
 # Calcite II - Trapped (Green triangles):
-V_not_p_f_unit_C_II, E_not_p_f_unit_C_II = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/calcite_II_trapped.dat', skiprows = 1).T
+V_not_p_f_unit_C_II, E_not_p_f_unit_C_II = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, 'calcite_II_trapped.dat'), skiprows = 1).T
 
 # 14 (Empty grey triangles):
-V_14_not_p_f_unit, E_14_not_p_f_unit = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/calcite_II.dat', skiprows = 1).T
+V_14_not_p_f_unit, E_14_not_p_f_unit = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, 'calcite_II.dat'), skiprows = 1).T
 
 # Calcite II - Trapped 0.98 (Green triangles):
-V_not_p_f_unit_C_II_0_98, E_not_p_f_unit_C_II_0_98 = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/calcite_II_trapped_0_98.dat', skiprows = 1).T
-
+V_not_p_f_unit_C_II_0_98, E_not_p_f_unit_C_II_0_98 = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, 'calcite_II_trapped_0_98.dat'), skiprows = 1).T
 
 # Calcite II - Trapped 0.87 (Green triangles):
-V_not_p_f_unit_C_II_0_87, E_not_p_f_unit_C_II_0_87 = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/calcite_II_trapped_0_87.dat', skiprows = 1).T
+V_not_p_f_unit_C_II_0_87, E_not_p_f_unit_C_II_0_87 = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, 'calcite_II_trapped_0_87.dat'), skiprows = 1).T
 
 # If the data is not per f unit, do this:
 nFU_C_I = 2.0
@@ -297,7 +298,7 @@ print 'C14 = ', popt_14
 
 plt.xlabel('V / Formula unit (Angstrom$^{3}$)')
 plt.ylabel('E / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 plt.ticklabel_format(useOffset=False)
 
@@ -326,7 +327,7 @@ plt.legend((p1, p2), ("Calcite I", "BM fit Calcite I"), prop=fontP)
 
 plt.xlabel('V / Formula unit (Angstrom$^{3}$)')
 plt.ylabel('E / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 #plt.legend()
 #plt.show()
@@ -351,7 +352,7 @@ plt.legend((p3, p4), ('Calcite II ("trapped")', 'BM fit Calcite II ("trapped")')
 
 plt.xlabel('V / Formula unit (Angstrom$^{3}$)')
 plt.ylabel('E / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 #plt.legend()
 #plt.show()
@@ -374,7 +375,7 @@ plt.legend() #(p3, p4), ('Calcite II ("trapped")', 'BM fit Calcite II ("trapped"
 
 plt.xlabel('V / Formula unit (Angstrom$^{3}$)')
 plt.ylabel('E / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.87 - 0.98)$V_{eq}$", fontsize=10)
 #plt.legend()
 plt.ticklabel_format(useOffset=False)
@@ -399,7 +400,7 @@ plt.legend() #p3, 'Calcite II ("trapped")' ) #, prop=fontP)
 #plt.legend((p3, p4), ('Calcite II ("trapped")', 'BM fit Calcite II ("trapped")'), prop=fontP)
 plt.xlabel('V / Formula unit (Angstrom$^{3}$)')
 plt.ylabel('E / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$", fontsize=10)
 #plt.legend()
 #plt.closefig()
@@ -502,12 +503,12 @@ fit_14 = np.poly1d(fitting_14)
 
 fig = plt.figure()
 
-EnergyCI, VolumeCI, PressureCI, EnthalpyCI  = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/plus_delta_H/E_V_P_H__C_I.dat', skiprows = 1).T
+EnergyCI, VolumeCI, PressureCI, EnthalpyCI  = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, './plus_delta_H/E_V_P_H__C_I.dat'), skiprows = 1).T
 
 print 'PressureCI[0] = ', PressureCI[0]
 print 'PressureCI[-1] = ', PressureCI[-1]
 
-Energy14, Volume14, Pressure14, Enthalpy14  = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/plus_delta_H/E_V_P_H__14.dat', skiprows = 1).T
+Energy14, Volume14, Pressure14, Enthalpy14  = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, './plus_delta_H/E_V_P_H__14.dat'), skiprows = 1).T
 
 print 'Pressure14[0] = ', Pressure14[0]
 print 'Pressure14[-1] = ', Pressure14[-1]
@@ -530,7 +531,7 @@ plt.legend((p1, p11, p5, p55), ("Calcite I", 'linear fit', 'Calcite II', 'linear
 
 plt.xlabel('P / Formula unit (GPa)')
 plt.ylabel('H / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 plt.ticklabel_format(useOffset=False)
 
@@ -542,10 +543,10 @@ crossing_x = np.roots(fitting - fitting_14)
 crossing_y = fit(crossing_x)
 print 'crossing_x = ', crossing_x
 print 'crossing_y = ', crossing_y
-ax = fig.add_subplot(111)
-ax.annotate('Intersection\nP=6.76689272 GPa\nH = -551.95344408 a.u.', xy=(6.76689272, -551.95344408), xytext=(6.76689272+2.7767, -551.95344408-162.27),
-            arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
-            )
+#ax = fig.add_subplot(111)
+#ax.annotate('Intersection\nP=6.76689272 GPa\nH = -551.95344408 a.u.', xy=(6.76689272, -551.95344408), xytext=(6.76689272+2.7767, -551.95344408-162.27),
+#           arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
+#           )
 plt.savefig('calcite_I_and_II_all_2_summary_better_plot_delta_H_1st_degree.pdf', bbox_inches='tight')
 
 
@@ -574,7 +575,7 @@ plt.legend((p1, p11, p5, p55), ("Calcite I", '2nd degree pol. fit', 'Calcite II'
 
 plt.xlabel('P / Formula unit (GPa)')
 plt.ylabel('H / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 
 plt.ticklabel_format(useOffset=False)
@@ -582,10 +583,10 @@ crossing_x = np.roots(fitting - fitting_14)
 crossing_y = fit(crossing_x)
 print 'crossing_x = ', crossing_x
 print 'crossing_y = ', crossing_y
-ax = fig.add_subplot(111)
-ax.annotate('Intersection\nP= 2.60943134 GPa\nH = -779.63314906 a.u.', xy=(2.60943134, -779.63314906), xytext=(2.60943134+2.7767, -779.63314906-162.27),
-            arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
-            )
+#ax = fig.add_subplot(111)
+#ax.annotate('Intersection\nP= 2.60943134 GPa\nH = -779.63314906 a.u.', xy=(2.60943134, -779.63314906), xytext=(2.60943134+2.7767, -779.63314906-162.27),
+#           arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
+#           )
 plt.savefig('calcite_I_and_II_all_2_summary_better_plot_delta_H_2nd_degree.pdf', bbox_inches='tight')
 
 
@@ -615,7 +616,7 @@ plt.legend((p1, p11, p5, p55), ("Calcite I", '3rd degree pol. fit', 'Calcite II'
 
 plt.xlabel('P / Formula unit (GPa)')
 plt.ylabel('H / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 
 plt.ticklabel_format(useOffset=False)
@@ -623,10 +624,10 @@ crossing_x = np.roots(fitting - fitting_14)
 crossing_y = fit(crossing_x)
 print 'crossing_x = ', crossing_x
 print 'crossing_y = ', crossing_y
-ax = fig.add_subplot(111)
-ax.annotate('Intersection\nP =  [ -5.18698424+43.15109474j\n       -5.18698424-43.15109474j\n      1.50582599 +0.j  ]\nH =  [  811.00634615+1866.26303147j\n      811.00634615-1866.26303147j\n       -846.40692208   +0.j ]', xy=(1.50582599, -846.40692208), xytext=(1.50582599+2.7767, -846.40692208-320.27),
-            arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
-            )
+#ax = fig.add_subplot(111)
+#ax.annotate('Intersection\nP =  [ -5.18698424+43.15109474j\n       -5.18698424-43.15109474j\n      1.50582599 +0.j  ]\nH =  [  811.00634615+1866.26303147j\n      811.00634615-1866.26303147j\n       -846.40692208   +0.j ]', xy=(1.50582599, -846.40692208), xytext=(1.50582599+2.7767, -846.40692208-320.27),
+#           arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
+#           )
 plt.savefig('calcite_I_and_II_all_2_summary_better_plot_delta_H_3rd_degree.pdf', bbox_inches='tight')
 
 #********* 4th degree:
@@ -655,7 +656,7 @@ plt.legend((p1, p11, p5, p55), ("Calcite I", '4th degree pol. fit', 'Calcite II'
 
 plt.xlabel('P / Formula unit (GPa)')
 plt.ylabel('H / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 
 plt.ticklabel_format(useOffset=False)
@@ -663,10 +664,10 @@ crossing_x = np.roots(fitting - fitting_14)
 crossing_y = fit(crossing_x)
 print 'crossing_x = ', crossing_x
 print 'crossing_y = ', crossing_y
-ax = fig.add_subplot(111)
-ax.annotate('Intersection\nP=1.05995113 GPa\nH = -874.29224237 a.u.', xy=(1.05995113, -874.29224237), xytext=(1.05995113+2.7767, -874.29224237-162.27),
-            arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
-            )
+#ax = fig.add_subplot(111)
+#ax.annotate('Intersection\nP=1.05995113 GPa\nH = -874.29224237 a.u.', xy=(1.05995113, -874.29224237), xytext=(1.05995113+2.7767, -874.29224237-162.27),
+#           arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
+#           )
 plt.savefig('calcite_I_and_II_all_2_summary_better_plot_delta_H_4th_degree.pdf', bbox_inches='tight')
 
 
@@ -674,13 +675,11 @@ plt.savefig('calcite_I_and_II_all_2_summary_better_plot_delta_H_4th_degree.pdf',
 # Plotting P vs V:
 
 fig = plt.figure()
-EnergyCI, VolumeCI, PressureCI, EnthalpyCI  = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/plus_delta_H/E_V_P_H__C_I.dat', skiprows = 1).T
-
+EnergyCI, VolumeCI, PressureCI, EnthalpyCI  = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, './plus_delta_H/E_V_P_H__C_I.dat'), skiprows = 1).T 
 print 'PressureCI[0] = ', PressureCI[0]
 print 'PressureCI[-1] = ', PressureCI[-1]
 
-Energy14, Volume14, Pressure14, Enthalpy14  = np.loadtxt('/home/david/Trabajo/structures/Calcite_I_and_II/B3LYP__SHRINK_8_8__bipolar_18_18__TOLINTEG_8_18__XXLGRID_TOLDEE_8/plus_delta_H/E_V_P_H__14.dat', skiprows = 1).T
-
+Energy14, Volume14, Pressure14, Enthalpy14  = np.loadtxt(os.path.join(filefolder_for_E_and_P_vs_V, './plus_delta_H/E_V_P_H__14.dat'), skiprows = 1).T    
 print 'Pressure14[0] = ', Pressure14[0]
 print 'Pressure14[-1] = ', Pressure14[-1]
 
@@ -689,7 +688,7 @@ xp_14 = np.linspace(Pressure14[-1], Pressure14[0], 100)
 
 
 # Plotting the fitting curves:
-p2, = plt.plot(V_C_I_lin, P(V_C_I_lin, *popt_C_I), color='grey', label='BM fit Calcite I' )
+p2, = plt.plot(V_C_I_lin, P(V_C_I_lin, *popt_C_I), color='black', label='BM fit Calcite I' )
 p6, = plt.plot(V_14_lin, P(V_14_lin, *popt_14), 'b', label='BM fit Calcite II')
 
 # Plotting the scattered points: 
@@ -703,7 +702,7 @@ plt.legend((p1, p2, p5, p6), ("Calcite I", "BM fit Calcite I", 'Calcite II', 'BM
 
 plt.xlabel('V / Formula unit (Angstrom$^{3}$)')
 plt.ylabel('P (GPa)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
+plt.suptitle("B3LYP-D3, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
 plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
 plt.ticklabel_format(useOffset=False)
 
