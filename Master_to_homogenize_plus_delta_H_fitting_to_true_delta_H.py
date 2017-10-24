@@ -54,11 +54,11 @@ V_14_not_p_f_unit, E_14_not_p_f_unit = np.loadtxt(os.path.join(filefolder_for_E_
 print 'V_14_not_p_f_unit = ', V_14_not_p_f_unit
 print 'len(V_14_not_p_f_unit) = ', len(V_14_not_p_f_unit)
 # In order to avoid last three
-V_14_not_p_f_unit = V_14_not_p_f_unit[:-5]
-print 'V_14_not_p_f_unit = ', V_14_not_p_f_unit
-print 'len(V_14_not_p_f_unit) = ',len(V_14_not_p_f_unit)
-E_14_not_p_f_unit = E_14_not_p_f_unit[:-5]
-print 'E_14_not_p_f_unit = ', E_14_not_p_f_unit
+#V_14_not_p_f_unit = V_14_not_p_f_unit[:-5]
+#print 'V_14_not_p_f_unit = ', V_14_not_p_f_unit
+#print 'len(V_14_not_p_f_unit) = ',len(V_14_not_p_f_unit)
+#E_14_not_p_f_unit = E_14_not_p_f_unit[:-5]
+#print 'E_14_not_p_f_unit = ', E_14_not_p_f_unit
 #sys.exit()
 
 # Calcite II - Trapped 0.98 (Green triangles):
@@ -575,74 +575,6 @@ plt.ticklabel_format(useOffset=False)
 plt.savefig('calcite_I_and_II_all_2_summary_better_plot_P_vs_V.pdf', bbox_inches='tight')
 
 #plt.show()
-
-# Plotting and fitting to the exact expression of Delta_H:
-#********* Exact expression of Delta_H:
-
-fig = plt.figure()
-
-EnergyCI, VolumeCI, PressureCI, EnthalpyCI  = np.loadtxt('./E_V_P_H__C_I.dat', skiprows = 1).T
-
-print 'PressureCI[0] = ', PressureCI[0]
-print 'PressureCI[-1] = ', PressureCI[-1]
-
-Energy14, Volume14, Pressure14, Enthalpy14  = np.loadtxt('./E_V_P_H__14.dat', skiprows = 1).T
-
-print 'Pressure14[0] = ', Pressure14[0]
-print 'Pressure14[-1] = ', Pressure14[-1]
-
-#xp_C_I = np.linspace(PressureCI[-1], PressureCI[0], 100)
-xp_C_I = np.linspace(PressureCI[0], PressureCI[-1], 100)
-#xp_14 = np.linspace(Pressure14[-1], Pressure14[0], 100)
-xp_14 = np.linspace(Pressure14[0], Pressure14[-1], 100)
-
-# Plotting the fitting curves:
-
-# This does not work (yields a wrong fit, because you plot plot H(V) versus some completely uncorrelated pressures xp_C_I:
-#p2, = plt.plot(xp_C_I, H(V_C_I_lin, *popt_C_I), color='grey', label='H fit Calcite I' )
-
-# This works but it does not play with all the linspace in plotting 
-#p2, = plt.plot(PressureCI, H(V_C_I, *popt_C_I), color='grey', label='H fit Calcite I' )
-
-# IOBE suggestion:
-p2, = plt.plot(P(V_C_I_lin, *popt_C_I), H(V_C_I_lin, *popt_C_I), color='grey', label='H fit Data' )
-
-# This does not work (yields a wrong fit, because you plot plot H(V) versus some completely uncorrelated pressures xp_C_I:
-#p6, = plt.plot(xp_14, H(V_14_lin, *popt_14), 'b', label='H fit Calcite II')
-
-# This works but it does not play with all the linspace in plotting
-#p6, = plt.plot(Pressure14, H(V_14, *popt_14), 'b', label='H fit Calcite II')
-
-# IOBE suggestion:
-p6, = plt.plot(P(V_14_lin, *popt_14), H(V_14_lin, *popt_14), color='black', label='H fit Data' )
-
-print 'V_C_I_lin = ', V_C_I_lin
-print ' xp_C_I = ', xp_C_I
-print ' H(V_C_I_lin, *popt_C_I) = ', H(V_C_I_lin, *popt_C_I)
-
-# Plotting the scattered points: 
-p1 = plt.scatter(pressures_per_F_unit_C_I, H_C_I, color='red', marker="^", label='Calcite I', s=100)
-p5 = plt.scatter(pressures_per_F_unit_14, H_14, color='grey', marker="^", facecolors='none', label='Calcite II', s=100)
-
-fontP = FontProperties()
-fontP.set_size('small')
-
-plt.legend((p1, p2, p5, p6), ("Calcite I", 'H fit Calcite I', 'Calcite II', 'H fit Calcite II'), prop=fontP)
-
-plt.xlabel('P / Formula unit (GPa)')
-plt.ylabel('H / Formula unit (a.u.)')
-plt.suptitle("B3LYP, pob-TZVP, SHRINK 8 8, Bipolar 18 18, TOLINTEG 8 18, XXLGRID, TOLDEE 8")
-plt.title("(0.98 - 1.08)$V_{eq}$ and (0.87 - 0.98)$V_{eq}$", fontsize=10)
-plt.ticklabel_format(useOffset=False)
-ax = fig.add_subplot(111)
-ax.annotate('Intersection\nP=1.05995113 GPa\nH = -874.29224237 a.u.', xy=(1.05995113, -874.29224237), xytext=(1.05995113+2.7767, -874.29224237-162.27),
-            arrowprops=dict(arrowstyle="->", connectionstyle="arc3", color='blue'),
-            )
-plt.savefig('calcite_I_and_II_all_2_summary_better_plot_delta_H_exact_expression.pdf', bbox_inches='tight')
-
-
-
-
 
 # Saving into variables:
 P_lin_C_I = P(V_C_I_lin, *popt_C_I)
